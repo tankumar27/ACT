@@ -1,0 +1,376 @@
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LoadingBoundary name="/" loading={null}>
+      <HTTPAccessFallbackBoundary notFound={{...}} forbidden={undefined} unauthorized={undefined}>
+        <HTTPAccessFallbackErrorBoundary pathname="/" notFound={{...}} forbidden={undefined} unauthorized={undefined} ...>
+          <RedirectBoundary>
+            <RedirectErrorBoundary router={{...}}>
+              <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+                <SegmentViewNode type="page" pagePath="page.tsx">
+                  <SegmentTrieNode>
+                  <Home>
+                    <main className="overflow-x...">
+                      <Navbar>
+                        <nav className="fixed top-...">
+                          <div className="mx-auto ma...">
+                            <div className="flex items...">
+                              <LinkComponent>
+                              <div className="hidden spa...">
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="ntavpn"
+                                >
++                                 Home
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="qbrken"
+                                >
++                                 Blueprint
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="2k6bpi"
+                                >
++                                 Subjects
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="ba4m3t"
+                                >
++                                 Tools
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="xt0atl"
+                                >
++                                 Habits
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="8owb2o"
+                                >
++                                 Plan
+                                ...
+                      <Hero>
+                      <About>
+                      <CommonIssues>
+                      <Resources>
+                      <Tips>
+                      <Contact>
+                        <section id="contact" ref={{current:null}} className="bg-slate-9...">
+                          <div className="mx-auto ma...">
+                            <h2>
+                            <div className="rounded-2x...">
+                              <form ref={{current:null}} onSubmit={function handleSubmit} className="space-y-6">
+                                <div className="grid gap-6...">
+                                  <div>
+                                    <label>
+                                    <input
+                                      type="text"
+                                      id="name"
+                                      name="name"
+                                      required={true}
+                                      className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 te..."
+-                                     fdprocessedid="0nh8io"
+                                    >
+                                  <div>
+                                    <label>
+                                    <input
+                                      type="text"
+                                      id="email"
+                                      name="email"
+                                      required={true}
+                                      className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 te..."
+-                                     fdprocessedid="5p7j1b"
+                                    >
+                                <div>
+                                  <label>
+                                  <input
+                                    type="text"
+                                    id="subject"
+                                    name="subject"
+                                    required={true}
+                                    className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 text..."
+-                                   fdprocessedid="ulthwj"
+                                  >
+                                <div>
+                                <button
+                                  type="submit"
+                                  className="w-full rounded-lg bg-gradient-to-r from-sky-500 to-indigo-500 px-6 py-3 f..."
+-                                 fdprocessedid="w3s22l"
+                                >
++                                 Save study intent
+                            ...
+                      ...
+                ...
+              ...
+ 
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Failed to fetch questions: TypeError: data.questions is not iterable (cannot read property undefined)
+    at fetchQuestions (app\components\PracticeClient.tsx:24:24)
+  22 |           const response = await fetch(`/api/generate-questions?section=${sec}&count=40`);
+  23 |           const data = await response.json();
+> 24 |           allQuestions.push(...data.questions);
+     |                        ^
+  25 |         }
+  26 |         setQuestions(allQuestions);
+  27 |       } else { (app\components\PracticeClient.tsx:33:15)
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LoadingBoundary name="/" loading={null}>
+      <HTTPAccessFallbackBoundary notFound={{...}} forbidden={undefined} unauthorized={undefined}>
+        <HTTPAccessFallbackErrorBoundary pathname="/" notFound={{...}} forbidden={undefined} unauthorized={undefined} ...>
+          <RedirectBoundary>
+            <RedirectErrorBoundary router={{...}}>
+              <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+                <SegmentViewNode type="page" pagePath="page.tsx">
+                  <SegmentTrieNode>
+                  <Home>
+                    <main className="overflow-x...">
+                      <Navbar>
+                        <nav className="fixed top-...">
+                          <div className="mx-auto ma...">
+                            <div className="flex items...">
+                              <LinkComponent>
+                              <div className="hidden spa...">
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="zihuma"
+                                >
++                                 Home
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="qie77h"
+                                >
++                                 Blueprint
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="g360u9"
+                                >
++                                 Subjects
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="9ddh0q"
+                                >
++                                 Tools
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="zpdd7"
+                                >
++                                 Habits
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="my20x"
+                                >
++                                 Plan
+                                ...
+                      <Hero>
+                      <About>
+                      <CommonIssues>
+                      <Resources>
+                      <Tips>
+                      <Contact>
+                        <section id="contact" ref={{current:null}} className="bg-slate-9...">
+                          <div className="mx-auto ma...">
+                            <h2>
+                            <div className="rounded-2x...">
+                              <form ref={{current:null}} onSubmit={function handleSubmit} className="space-y-6">
+                                <div className="grid gap-6...">
+                                  <div>
+                                    <label>
+                                    <input
+                                      type="text"
+                                      id="name"
+                                      name="name"
+                                      required={true}
+                                      className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 te..."
+-                                     fdprocessedid="5s0h9d"
+                                    >
+                                  <div>
+                                    <label>
+                                    <input
+                                      type="text"
+                                      id="email"
+                                      name="email"
+                                      required={true}
+                                      className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 te..."
+-                                     fdprocessedid="5rdbbg"
+                                    >
+                                <div>
+                                  <label>
+                                  <input
+                                    type="text"
+                                    id="subject"
+                                    name="subject"
+                                    required={true}
+                                    className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 text..."
+-                                   fdprocessedid="mp55fc"
+                                  >
+                                <div>
+                                <button
+                                  type="submit"
+                                  className="w-full rounded-lg bg-gradient-to-r from-sky-500 to-indigo-500 px-6 py-3 f..."
+-                                 fdprocessedid="69xwum"
+                                >
++                                 Save study intent
+                            ...
+                      ...
+                ...
+              ...
+ 
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <LoadingBoundary name="/" loading={null}>
+      <HTTPAccessFallbackBoundary notFound={{...}} forbidden={undefined} unauthorized={undefined}>
+        <HTTPAccessFallbackErrorBoundary pathname="/" notFound={{...}} forbidden={undefined} unauthorized={undefined} ...>
+          <RedirectBoundary>
+            <RedirectErrorBoundary router={{...}}>
+              <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} segmentPath={[...]} ...>
+                <SegmentViewNode type="page" pagePath="page.tsx">
+                  <SegmentTrieNode>
+                  <Home>
+                    <main className="overflow-x...">
+                      <Navbar>
+                        <nav className="fixed top-...">
+                          <div className="mx-auto ma...">
+                            <div className="flex items...">
+                              <LinkComponent>
+                              <div className="hidden spa...">
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="intk09"
+                                >
++                                 Home
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="uy7xg5"
+                                >
++                                 Blueprint
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="yomnu8"
+                                >
++                                 Subjects
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="sw163j"
+                                >
++                                 Tools
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="cooodi"
+                                >
++                                 Habits
+                                <button
+                                  onClick={function onClick}
+                                  className="text-slate-200 transition-colors hover:text-sky-300"
+-                                 fdprocessedid="42r9g2"
+                                >
++                                 Plan
+                                ...
+                      <Hero>
+                      <About>
+                      <CommonIssues>
+                      <Resources>
+                      <Tips>
+                      <Contact>
+                        <section id="contact" ref={{current:null}} className="bg-slate-9...">
+                          <div className="mx-auto ma...">
+                            <h2>
+                            <div className="rounded-2x...">
+                              <form ref={{current:null}} onSubmit={function handleSubmit} className="space-y-6">
+                                <div className="grid gap-6...">
+                                  <div>
+                                    <label>
+                                    <input
+                                      type="text"
+                                      id="name"
+                                      name="name"
+                                      required={true}
+                                      className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 te..."
+-                                     fdprocessedid="f7h56s"
+                                    >
+                                  <div>
+                                    <label>
+                                    <input
+                                      type="text"
+                                      id="email"
+                                      name="email"
+                                      required={true}
+                                      className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 te..."
+-                                     fdprocessedid="d0fb1k"
+                                    >
+                                <div>
+                                  <label>
+                                  <input
+                                    type="text"
+                                    id="subject"
+                                    name="subject"
+                                    required={true}
+                                    className="w-full rounded-lg border border-white/10 bg-slate-950/60 px-4 py-3 text..."
+-                                   fdprocessedid="aa0pys7"
+                                  >
+                                <div>
+                                <button
+                                  type="submit"
+                                  className="w-full rounded-lg bg-gradient-to-r from-sky-500 to-indigo-500 px-6 py-3 f..."
+-                                 fdprocessedid="q1afdi"
+                                >
++                                 Save study intent
+                            ...
+                      ...
+                ...
+              ...
+ 
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+^C

@@ -1,0 +1,321 @@
+ACT LEARNING KNOWLEDGE BASE
+
+Platform purpose:
+This site helps students prepare for the ACT with focused practice, pacing guidance, and section-specific strategy. The assistant must answer only from the information in this file. If a student asks about something not covered here, the assistant should say that the knowledge base does not currently include that detail and encourage the student to study the closest related concept on the site.
+
+General ACT guidance:
+- The ACT has four required academic sections on this site: English, Math, Reading, and Science.
+- Strong ACT prep relies on timed repetition, error review, and short reflection after each practice set.
+- When students miss questions, the most helpful next step is to identify the skill, explain why the correct answer works, and compare it with the mistaken answer.
+- Students should keep notes on recurring mistakes such as rushing, missing keywords, skipping units, or falling for answer choices that sound plausible but are not supported.
+
+English section guidance:
+- English questions often test grammar, punctuation, sentence structure, transitions, and style.
+- A good process is to read the full sentence, check grammar first, then choose the answer that is both correct and concise.
+- Transition words should match the relationship between ideas, such as contrast, cause and effect, sequence, or example.
+
+Math section guidance:
+https://players.brightcove.net/1107601866001/WIbujFlvw_default/index.html?videoId=6370639365112
+Exponents and Radicals
+To fully tackle exponents and radicals, you'll need to understand and memorize some rules.
+In this lesson, we'll talk about how to apply exponent rules and how exponents are used in
+scientific notation. We'll also cover the rules for radicals, also known as roots. Exponents
+are shorthand to show that a number is being multiplied by itself several times. If we have 3
+to the fourth power, this means we have 3 multiplied by itself four times. As the numbers
+get bigger, writing all that out becomes impractical. That's why we use exponents. When
+different exponents have the same base. There are rules we can use to combine them. If we
+had 3 to the third power times 3 squared, they have the same base, so we can just add the
+exponents 3 and 2 to get 3 to the fifth. Here's why that works. If we write this out, it's 3 times
+3 times 3 multiplied by 3 times 3. That's the same number multiplied by itself five times, or
+3 to the fifth power. That's why whenever we multiply exponents with the same base, we
+can just add the exponents. If we're dividing, we subtract the exponents. For 3 to the third
+power divided by 3 squared, we would do 3 - 2 to get an exponent of 1. If we have an
+exponent raised to an exponent, we multiply the exponents. So, 3 squared to the third is 3
+to the sixth. Sometimes, it's helpful to rewrite an expression with exponents to help us
+solve a question. For instance, if we have a fraction raised to an exponent, we can rewrite it
+with a numerator and denominator each raised to that exponent. So, 2 thirds squared can
+be written as 2 squared over 3 squared. And if a product inside parentheses is raised to an
+exponent, we can rewrite it as each factor inside the parentheses raised to that exponent.
+So, the quantity 3 times 2 squared can be rewritten as 3 squared times 2 squared. Just a
+few final rules. A negative exponent means to rewrite the expression as the fraction 1 over
+the base raised to the positive exponent. So, to rewrite 3 to the negative second, we just put
+1 over 3 to the positive second. Any number to the 1 power is just the base itself. So, in this
+case, it's 3. And the easiest and my favorite rule, any number to the 0 power is always 1.
+Here's a list of all these exponent rules you should know. Pause and write these down if
+you're not familiar with them, then try an exponents question that requires one of these
+rules. Okay, for this problem that we have here, we have to figure out which of the following
+expressions is equivalent to this -4x raised to the third power. Okay, well, lemme go ahead
+and write that. Let's make sure we know our exponent rules here. You wanna distribute
+exponents outside a set of parentheses to each term inside the parentheses. So, lemme go
+ahead and break this apart. Essentially, we're gonna say is -4 to the third power and also x
+to the third power. So, note that that power of 3 does apply to both pieces inside the
+parentheses, and this simplifies down to -64x to the third power. That matches answer
+choice A. And remember the last step, always do get into the habit of saying, "Did I actually
+answer the right question?" And yes, I did here. But I wanna highlight two incorrect answer
+choices that may have been traps for you. So, C, that -4 x to the third, that is what you might
+get if you thought that the exponent only applies to the last term in the parentheses. And
+then D, that 64x cubed here, is what you might pick if you thought that cubing a negative
+number makes it positive. So, our main takeaway for this problem is that a negative number
+raised to an odd exponent is going to result in a negative number. Scientific notation is the
+specific way of using exponents to express numbers. Usually, we use it when the numbers
+are really big or really small. Let's get number crazy here and use the example 4385 million.
+That is a lot of zeros. Scientific notation transform all of that into this. To represent a large
+number in scientific notation, start by moving the decimal point to the left until there's only
+one digit, the 4. Then we count how many places we moved the decimal over. Here, we
+moved nine spaces, so we can take the new decimal and multiply it by 10 to the ninth
+power. The exponent is always equal to how many places we move the decimal. For small
+numbers, we'd have a negative exponent. That's because we're moving the decimal to the
+right. Here, we have .00034. We move the decimal point right until we pass the first non-
+zero digit, 3. Then count how many places we moved it to the right to find the exponent.
+Here, it's 4. So, we have 3.4 times 10 to the negative fourth power. The exponent is negative
+to tell us what direction the decimal should move if we wanted to return the number to its
+original form. Now, go ahead and try a scientific notation question. This is a scientific
+notation problem. So, let's kind of talk about the idea here of scientific notation as it relates
+to this problem. Know that multiplying a number in scientific notation by another power of
+10 would only affect the exponent on the original 10. Multiplying by 8% that we have here is
+the same as multiplying by 0.08, which is just a little bit less than .10, or 10 to the -1. So, we
+can use here is estimation. Let's do that. Let's say 3.67 times 10 to the fifth, so that's the
+problem that they have there. Now I'm gonna multiply it by that 10 to the negative first
+power, that is then going to equal 3.67 times 10 to the fourth. Now, what we do is that in
+order to get this into a number and move it outta scientific notation, we're gonna move the
+decimal point in the 3.67 four points to the right. So, one, two, three, four. I need to write in
+my zeros in order for that to work, and that's going to be 36,700. So, the right answer is
+gonna be something that's a little bit smaller than this, which is going to match answer
+choice H. Now, again, the correct answer, it's gonna be in scientific notation with a 10
+raised to a power of 4, and H is the only answer with the right number of digits here. Two
+takeaways to think about for the scientific notation problem. Number one, when there's
+enough space between the answer choices like we have here, save time by estimating,
+rather than doing the exact calculation. And for number two, operations involving
+multiplying or dividing a number in scientific notation by another power of 10 only affect the
+exponent of the original power of 10. The square root of a number, also called a radical,
+answers the question, what number times itself equals this number? So, the square root of
+16 would be 4, because 4 times 4 gives you 16. You could also think of finding a square root
+as the opposite of squaring a number. Squaring means multiplying a number by itself while
+taking the square root reverses that process. Just like 4 squared is 16, the square root of 16
+is 4. Sometimes, we'll have to do math with a radical sign. A couple of important things to
+know. First, we can combine roots by multiplying, but we can't combine roots by adding.
+Root 3 times root 2 is root 6, but root 3 plus root 2 is just root 3 plus root 2. There's no way
+to simplify that. Note that we can also divide roots. So, root 6 divided by root 3 is root 2.
+Also, the square root is actually just an exponent, an exponent of one half. So, the square
+root of x can also be written as x to the one half power. I'm rooting for you on this next
+question. Okay, this question now is making sure that we know our radical rules and how to
+use them in this problem. They wanna know what is the value of this expression when they
+give us what a is and what b is. So, the first thing we're gonna do is we're actually just gonna
+plug in root 2 for a and root 7 for b, and let's see where that gets us. So, lemme go ahead
+and rewrite that. Careful, 'cause this is what it's gonna look like. You have kind of a radical
+within a radical here. Okay. Now, one rule to remember is that when you have the square
+root of something squared, that's essentially opposite operations and that's gonna cancel
+out. So, actually what we're gonna have here is just simply going to be 2 + 7, which is going
+to be root 9, which simplifies down to 3. The answer that matches that of course here is
+answer choice C. I do want to highlight some incorrect answer traps here. First one I wanna
+highlight is B, that root 53. That's what you would've gotten if you had plugged in 2 and 7,
+rather than root 2 and root 7 into the problem. And now D, 9, that's what you would've
+gotten if you had forgotten to take the square root of the sum of a squared and b squared.
+So, the takeaway here is by definition, squaring the square root of a number is just gonna
+result in the original number. With exponent and radicals, the most important thing is to
+review the rules so you have them ready to go on test day. I'll show the list again at the end
+of this lesson. Be aware of when you need the same base to use the exponent rules we've
+discussed here. And keep in mind scientific notation, especially for large and small
+numbers.
+ 
+Key Takeaways
+Takeaway 1: Make sure you memorize exponent and radical rules before test day.
+Takeaway 2: Scientific notation is a way of writing very large or small numbers using powers of 10.
+
+Reading section guidance:
+Video Link: https://players.brightcove.net/1107601866001/WIbujFlvw_default/index.html?videoId=6370684480112
+How To Do ACT Reading
+Let's talk about ACT Reading. In this section, you don't want to just read like you normally
+would. The passages are long and sometimes boring, so you won't be able to remember
+everything. Plus, you'll be timed. So, it's important that instead of focusing on details, you
+understand the main idea, the author's purpose for writing the passage. In this lesson,
+you'll learn a passage strategy, a way to read efficiently so you're ready to answer the
+questions. Then, we will review the steps of the methods so you can efficiently answer ACT
+Reading questions. On the ACT Reading section, you're being timed, which can add stress
+and pressure. But remember, it's also essentially an open-book test. There's no reason to
+spend time learning the details. You'll be able to go back and look at them if you need to.
+What's important is to know why the author wrote the passage and the main idea they're
+trying to get across. So, strategically you'll wanna start with the blurb, the short
+introduction that precedes each passage. The blurb identifies the type of passage coming
+up, and the title introduces the topic. Then, read actively, searching for keywords that
+reveal the author's intentions and point of view. On the ACT, the passage structure is much
+more important than the details. So, as you read, think about why each paragraph was
+written, and jot down a short note that identifies the purpose of that paragraph. When we
+reach the end of the passage, we'll summarize the main idea, specifically the author's
+purpose for writing the passage and the main idea the author conveyed. Reading this way
+enables you to quickly find correct answers and eliminate wrong ones. Practice this
+strategy as you read this passage. The blurb and the opening paragraphs can show a lot
+about the author's focus in the passage. Here, we're talking about the topic of animal
+awareness, not from the author's point of view, but rather the views of different groups of
+people. The author also tells us there is some disagreement on the topic using the
+keywords, polarized and argue. We haven't heard the author's opinion yet, so continue to
+look for the author's point of view as you read. Keep your notes minimal and focus them on
+the structure or outline in the passage. Read details quickly. You can always look them up
+later if asked about them. Focus on why the author included the paragraph. Here, a good
+note is anything like differing options on awareness. The second paragraph is about the red
+spot technique, followed by a lot of details. Once you know the reason for this red spot test,
+that it's a way to measure animal awareness, add that to your notes and read through the
+rest of the details quickly. If you need them later for a question, you'll come back to this
+paragraph and look them up. When you hit the contrast keyword, but, slow down. This is
+where we first hear the author's opinion. The author feels there are some problems with
+this technique. Add that to your notes and move on. The next paragraph continues the
+author's discussion of the problems with laboratory tests based on visual cues. There are a
+lot of interesting details here, but remember to focus on why the author included this
+paragraph. It elaborates on the problems of visual tests. These tests can overlook other
+ways animals may recognize themselves such as sound or smell. Add this idea to your
+notes and move to the next paragraph. In paragraph 4, the author shares an important
+warning, marked by the keywords, we must be careful. Since the author emphasized this
+idea, read it carefully before summarizing it. Don't make assumptions about animal
+awareness. Now, why did the author include the example of the grey wolf in paragraph 5?
+They say it is dismissed by researchers, but may actually have self-awareness. This
+example strengthens the author's argument that we shouldn't make assumptions about
+animal self-awareness. Add that note and move on. As you get towards the end of a
+passage, you'll have a pretty good picture of how the author thinks and what they're trying
+to accomplish. In paragraph 6, the author strongly asserts the view that mirror studies have
+problems by repeating the word, wrong. In the closing paragraph, the first and last
+sentences provide the author's conclusion, people need to be more flexible with their
+interpretation of self-awareness. The author also cautions us not to assume that humans
+are the only ones who are self-aware. Add this idea to your notes. Keep in mind that like the
+first paragraph, the last paragraph can also be a great source for identifying the author's
+overall purpose. Once you finish reading, pause a moment and answer the question, why
+did the author write this passage? Here, the main idea is the author argues that some
+definitions of animal awareness are too narrow. You'll use this main idea information to
+answer many reading questions on the ACT. Now that we've read the passage, we're ready
+to tackle the questions. Let's discuss a method that will give you the steps to answer every
+reading question efficiently. First, we'll unpack the question stem, which will give us clues
+on where to find the answer. In later sessions, we'll also learn how to identify the different
+types of questions that appear on the ACT Reading. For step 2, we'll return to the passage
+and research the answer. Like we said earlier, it's an open-book test, so we'll use our notes
+to help us look up the answers in the passage. Our next step is to predict the answer.
+Having an answer in mind, in your own words, enables us to efficiently evaluate the choices
+to find the one correct answer. It obviously won't be in the exact same words we predicted,
+but the essence should be the same. Go ahead and use these steps on our first question.
+Unpacking the stem, this question gives us a writer's sample summary of the passage and
+asks if that writer has done a good job. For step 2, let's compare that summary to our own
+main idea and research the answer in our notes. Our main idea was that the passage
+argued many people have too narrow a view of how animal awareness is defined.
+Comparing that to the summary in the question, which says, "Humans are most likely the
+only species with a sense of self," that's not a good match. In fact, our last paragraph note
+said the opposite. So, our prediction is no, eliminate A and B. Evaluating the reasoning
+given in C and D, we can select our answer choice D based on our paragraph 7 note. Here's
+a question where your passage notes will come in handy because they'll speed up your
+review. The phrase, "According to the passage," tells you that it'll be something the passage
+says straight out. So, use your passage notes to quickly find the part of the passage that the
+question talks about and look up the exact detail you need. Try that on this question. For
+step 1, the question provides a lot of clues. The correct answer will be an animal
+experience that the passage describes as one of the problems with the red spot test. For
+step 2, when we research the answer, we can use our passage notes to lead us to exactly
+where the information will be. The red spot test is found in the second paragraph. Start in
+the middle of the paragraph where the author's objections are marked by the keyword, but,
+and read carefully to find the answer. At the end of the paragraph, human contact and
+experience with mirrors are identified as possible problems, and that becomes our
+prediction, which is step 3. For step 4, checking the answer choices, F is a match and we're
+done. This last question asks about why the author includes something. Remember, we
+were asking ourselves that same question as we read the passage. On the ACT, the purpose
+of any given paragraph will be connected to the overall purpose of the passage. So, use
+your understanding of the author's overall purpose to guide you here. The question tells us
+we need to figure out why the author talks about Darwin. So, for step 2, quickly scan the
+passage for Darwin's name. It's found at the end of the seventh paragraph. The end of the
+sentence provides the reason the author mentioned Darwin's work. Notice the author's
+opinion keyword, caution against. Darwin's work is another reason to be skeptical that
+humans are the only species with a sense of self-awareness. This is more evidence the
+author is using to support the passage's main idea. Use that as a prediction and check the
+choices. Choice C matches our prediction, although it uses different words. Instead of
+specifically mentioning humans, the choice generalizes the warning of limiting self-
+awareness to only a few species. This is the correct answer. For practice, let's review why
+the other choices are incorrect. Choice A shifts the focus to the origin of self-awareness.
+Eliminate this one. Choice B goes too far. The passage never states that self-awareness is a
+trait that does not vary among species. Eliminate this choice. Choice D shifts the focus to
+whether self-awareness is inherited or learned. Another topic the passage never discusses,
+and so can be eliminated. We'll get into more detail about how to answer different types of
+questions in our other lessons. But for now, remember. When you're reading a passage,
+here's what matters most. Look for why the author wrote it and find the main idea and the
+author's purpose. Note the location of details so you can look them up if needed, but read
+them quickly. Then, apply the steps of the question method to efficiently answer the
+questions.
+Key Takeaways
+Takeaway 1: Timing is tight in ACT Reading, so read for the big picture and don’t try to memorize the details.
+Takeaway 2: Highlighting and/or note-taking as you read helps you answer questions quickly and correctly by making the passage easier to navigate.
+Takeaway 3: Following the Method provides you with the steps to answer the questions efficiently.
+
+Science section guidance:
+- Science questions mainly test data interpretation, graph reading, experiment design, and evidence-based reasoning.
+- Students do not need deep outside science knowledge for most items.
+- Read graph titles, axes, and units before reading the full passage.
+- Distinguish what the data directly shows from what can only be guessed.
+
+Review workflow guidance:
+- When a student gets a question wrong, the explanation should name the skill, show the reasoning for the correct answer, and gently point out why the chosen answer fails.
+- If the student asks for more clarity, the coach should restate the idea in simpler language and suggest one small habit that would help on the next similar question.
+
+Practice problem record: math-linear-rate
+Section: Math
+Skill: Linear relationships
+Prompt: A student saves $18 each week. After 6 weeks, the student has saved $108. If the savings continue at the same rate, which equation gives the total savings y after x weeks?
+Choices:
+- A. y = 6x + 18
+- B. y = 18x
+- C. y = 108x
+- D. y = x + 18
+Correct answer: B
+Explanation: The total savings grows by 18 dollars every week, so the relationship is y = 18x. The statement about 6 weeks confirms the rate because 18 multiplied by 6 equals 108.
+
+Practice problem record: science-trend-graph
+Section: Science
+Skill: Reading experimental data
+Prompt: In an experiment, Plant Group A receives more sunlight each day than Plant Group B. A graph shows that the average height of Group A increases more quickly across all four weeks. Which conclusion is best supported by the graph?
+Choices:
+- A. Group A started with taller seeds because sunlight changes seed size.
+- B. More daily sunlight is associated with faster plant growth in this experiment.
+- C. Group B would grow faster if given more water, even though water was not tested.
+- D. Sunlight is the only factor that ever affects plant height.
+Correct answer: B
+Explanation: The graph directly shows the group with more sunlight growing faster during the experiment. That supports an association in this experiment, but it does not prove claims about seed size, untested water conditions, or every possible cause of plant height.
+
+Practice problem record: english-transition
+Section: English
+Skill: Transitions and logical flow
+Prompt: Maria studied for the ACT every afternoon for three weeks. ______, she felt calmer and more prepared on test day. Which choice best completes the sentence?
+Choices:
+- A. However,
+- B. As a result,
+- C. Meanwhile,
+- D. For example,
+Correct answer: B
+Explanation: The second idea is the effect of Maria's preparation, so the sentence needs a cause-and-effect transition. "As a result" clearly expresses that link.
+
+Practice problem record: reading-main-idea
+Section: Reading
+Skill: Main idea and evidence
+Prompt: A passage explains that community gardens give neighborhoods fresh food, shared responsibility, and spaces where residents can meet one another. Which answer best states the main idea?
+Choices:
+- A. Community gardens are difficult to maintain in crowded cities.
+- B. Fresh vegetables are healthier than packaged snacks.
+- C. Community gardens improve neighborhoods in several practical and social ways.
+- D. Residents should avoid projects that require teamwork.
+Correct answer: C
+Explanation: The passage names several benefits, including food access and stronger community ties. Choice C captures that broad message, while the other choices are unsupported or too narrow.
+
+Practice problem record: math-geometry-area
+Section: Math
+Skill: Geometry formulas
+Prompt: A rectangle has length 12 and width 7. What is its area?
+Choices:
+- A. 19
+- B. 38
+- C. 84
+- D. 96
+Correct answer: C
+Explanation: The area of a rectangle is length multiplied by width. Multiplying 12 by 7 gives 84.
+
+Practice problem record: science-control-group
+Section: Science
+Skill: Controls and variables
+Prompt: A student tests whether fertilizer changes tomato growth. One group gets fertilizer and one group does not, while water and sunlight stay the same. Why is the no-fertilizer group important?
+Choices:
+- A. It serves as a comparison point for the effect of fertilizer.
+- B. It guarantees all plants will grow at the same rate.
+- C. It proves fertilizer is harmful.
+- D. It measures the amount of sunlight in the room.
+Correct answer: A
+Explanation: The no-fertilizer group is the control group. It gives a comparison point so the effect of the tested variable can be isolated more clearly.
