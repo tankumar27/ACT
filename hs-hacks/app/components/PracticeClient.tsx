@@ -9,7 +9,7 @@ import { sectionMeta, type ActSection, type PracticeQuestion } from '@/lib/act-c
 const sectionFilters: Array<ActSection | 'all'> = ['all', 'math', 'science', 'english', 'reading'];
 
 export default function PracticeClient() {
-  const [filter, setFilter] = useState<ActSection | 'all'>('all');
+  const [filter, setFilter] = useState<ActSection | 'all'>('math');
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [questions, setQuestions] = useState<PracticeQuestion[]>([]);
   const [loading, setLoading] = useState(false);
@@ -52,8 +52,10 @@ export default function PracticeClient() {
   };
 
   useEffect(() => {
-    fetchQuestions(filter);
-  }, [filter]);
+    if (!loading && questions.length === 0) {
+      fetchQuestions('math');
+    }
+  }, []);
 
   const answerQuestion = (questionId: string, choice: string) => {
     const next = { ...selectedAnswers, [questionId]: choice };
