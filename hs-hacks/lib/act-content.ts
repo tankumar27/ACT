@@ -1,27 +1,32 @@
-import { practiceQuestions, sectionMeta, type ActSection } from '@/data/act-practice';
+import {
+  practiceQuestions,
+  sectionMeta,
+  type ActSection,
+  type PracticeQuestion,
+} from '@/data/act-practice';
 
-export { practiceQuestions, sectionMeta, type ActSection };
+export { practiceQuestions, sectionMeta, type ActSection, type PracticeQuestion };
 
-export const sectionOrder: ActSection[] = ['math', 'science', 'english', 'reading'];
+export const sectionOrder: ActSection[] = ['math', 'english', 'science', 'reading'];
 
 export const homepageStats = [
   { label: 'Core ACT tracks', value: '4' },
-  { label: 'Targeted practice drills', value: '6' },
-  { label: 'AI clarification flow', value: '24/7' },
+  { label: 'Questions per AI set', value: '10' },
+  { label: 'AI clarification flow', value: 'Live' },
 ];
 
 export const studyPath = [
   {
-    title: 'Learn the pattern',
-    text: 'Start with strategy cards for English, Math, Reading, and Science so every section feels predictable.',
+    title: 'Scan the section',
+    text: 'Start with a clean section brief so Math, English, Science, and Reading each feel predictable before you practice.',
   },
   {
-    title: 'Practice under pressure',
-    text: 'Move into short drills with instant grading and clear signals about the skill behind each miss.',
+    title: 'Run an AI set',
+    text: 'Generate 10 fresh ACT-style questions per section and get immediate grading with skill tags.',
   },
   {
-    title: 'Clarify the miss',
-    text: 'Open the AI review page for any wrong answer and get a simpler explanation grounded in the site knowledge base.',
+    title: 'Review the miss',
+    text: 'Open AI clarification for any wrong answer and get a simpler explanation grounded in the local ACT knowledge file.',
   },
 ];
 

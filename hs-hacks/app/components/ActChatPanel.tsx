@@ -22,9 +22,7 @@ export default function ActChatPanel({
   problemId,
   studentAnswer,
 }: ActChatPanelProps) {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', text: intro },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([{ role: 'assistant', text: intro }]);
   const [draft, setDraft] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -76,13 +74,13 @@ export default function ActChatPanel({
   };
 
   return (
-    <div className="rounded-[2rem] border border-white/10 bg-slate-950/75 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.45)] backdrop-blur">
+    <div className="panel rounded-[2rem] p-6 backdrop-blur">
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl font-semibold text-white">{heading}</h2>
-          <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-300">{intro}</p>
+          <p className="mt-2 max-w-2xl text-sm leading-7 text-zinc-300">{intro}</p>
         </div>
-        <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-200">
+        <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-zinc-200">
           Knowledge-file only
         </span>
       </div>
@@ -93,8 +91,8 @@ export default function ActChatPanel({
             key={`${message.role}-${index}`}
             className={`rounded-3xl px-4 py-3 text-sm leading-7 ${
               message.role === 'assistant'
-                ? 'bg-white/8 text-slate-100'
-                : 'ml-auto max-w-xl bg-sky-500/20 text-sky-50'
+                ? 'bg-white/6 text-zinc-100'
+                : 'ml-auto max-w-xl bg-white text-black'
             }`}
           >
             {message.text}
@@ -103,7 +101,7 @@ export default function ActChatPanel({
       </div>
 
       {error ? (
-        <p className="mt-4 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-100">
+        <p className="mt-4 rounded-2xl border border-rose-400/30 bg-rose-400/10 px-4 py-3 text-sm text-rose-100">
           {error}
         </p>
       ) : null}
@@ -114,16 +112,16 @@ export default function ActChatPanel({
           onChange={(event) => setDraft(event.target.value)}
           rows={4}
           placeholder={placeholder}
-          className="w-full rounded-3xl border border-white/10 bg-slate-900/90 px-4 py-4 text-sm text-white outline-none transition focus:border-sky-400/70"
+          className="w-full rounded-3xl border border-white/10 bg-black/60 px-4 py-4 text-sm text-white outline-none transition focus:border-white/30"
         />
         <div className="flex items-center justify-between gap-3">
-          <p className="text-xs uppercase tracking-[0.22em] text-slate-400">
+          <p className="text-xs uppercase tracking-[0.22em] text-zinc-500">
             Answers are limited to the site knowledge file and stored practice records.
           </p>
           <button
             type="submit"
             disabled={loading}
-            className="rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? 'Thinking...' : 'Ask the coach'}
           </button>

@@ -16,18 +16,18 @@ export default function SectionShell({
   ctaHref,
 }: SectionShellProps) {
   return (
-    <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between" data-reveal>
       <div className="max-w-3xl">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-sky-300">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-zinc-400">
           {eyebrow}
         </p>
         <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">{title}</h2>
-        <p className="mt-4 text-lg leading-8 text-slate-300">{description}</p>
+        <p className="mt-4 text-lg leading-8 text-zinc-300">{description}</p>
       </div>
       {ctaLabel && ctaHref ? (
         <Link
           href={ctaHref}
-          className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+          className="button-primary justify-center"
         >
           {ctaLabel}
         </Link>

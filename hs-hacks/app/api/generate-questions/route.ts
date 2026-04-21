@@ -2,444 +2,136 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { NextRequest } from 'next/server';
 
-type ActSection = 'math' | 'science' | 'english' | 'reading';
-
-type PracticeQuestion = {
-  id: string;
-  section: ActSection;
-  title: string;
-  prompt: string;
-  choices: string[];
-  answer: string;
-  explanation: string;
-  skill: string;
-};
+import type { ActSection, PracticeQuestion } from '@/data/act-practice';
+import { getQuestionsForSection, isActSection } from '@/lib/act-content';
 
 const KNOWLEDGE_PATH = path.join(process.cwd(), 'data', 'act-knowledge.txt');
 const GEMINI_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+
+function normalizeQuestion(
+  section: ActSection,
+  index: number,
+  raw: Partial<PracticeQuestion>,
+): PracticeQuestion {
+  const letters = ['A', 'B', 'C', 'D'];
+  const rawChoices = Array.isArray(raw.choices) ? raw.choices.slice(0, 4) : [];
+  const choices = letters.map((letter, choiceIndex) => {
+    const value = rawChoices[choiceIndex] ?? `Placeholder option ${letter}`;
+    return value.match(/^[A-D]\.\s/) ? value : `${letter}. ${value}`;
+  });
+
+  const answer = typeof raw.answer === 'string' ? raw.answer.trim().charAt(0).toUpperCase() : 'A';
+
+  return {
+    id: `${section}-ai-${index + 1}`,
+    section,
+    title: raw.title?.trim() || `${section} question ${index + 1}`,
+    prompt: raw.prompt?.trim() || 'Question unavailable.',
+    choices,
+    answer: letters.includes(answer) ? answer : 'A',
+    explanation: raw.explanation?.trim() || 'No explanation was returned.',
+    skill: raw.skill?.trim() || 'ACT strategy',
+  };
+}
+
+function fallback(section: ActSection, count: number) {
+  return getQuestionsForSection(section).slice(0, count).map((question, index) => ({
+    ...question,
+    id: `${section}-fallback-${index + 1}`,
+  }));
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const section = searchParams.get('section') as ActSection;
-  const count = parseInt(searchParams.get('count') || '10');
+  const sectionParam = searchParams.get('section') ?? '';
+  const count = Math.max(1, Math.min(10, Number.parseInt(searchParams.get('count') || '10', 10)));
 
-  if (!section || !['math', 'science', 'english', 'reading'].includes(section)) {
+  if (!isActSection(sectionParam)) {
     return Response.json({ error: 'Invalid section' }, { status: 400 });
   }
 
-  // Sample ACT questions for each section
-  const sampleQuestions: Record<ActSection, PracticeQuestion[]> = {
-    math: [
-      {
-        id: 'math-1',
-        section: 'math',
-        title: 'Exponent Rules',
-        skill: 'Exponent operations',
-        prompt: 'Simplify: (2³) × (2⁴) = ?',
-        choices: ['A. 2⁷', 'B. 2¹²', 'C. 2⁶', 'D. 2⁸'],
-        answer: 'A',
-        explanation: 'When multiplying powers with the same base, add the exponents: 3 + 4 = 7.',
-      },
-      {
-        id: 'math-2',
-        section: 'math',
-        title: 'Radical Simplification',
-        skill: 'Square roots',
-        prompt: 'Simplify: √(48)',
-        choices: ['A. 4√3', 'B. 6√2', 'C. 2√12', 'D. 8√6'],
-        answer: 'A',
-        explanation: '√48 = √(16×3) = 4√3.',
-      },
-      {
-        id: 'math-3',
-        section: 'math',
-        title: 'Scientific Notation',
-        skill: 'Number representation',
-        prompt: 'Convert 0.00045 to scientific notation.',
-        choices: ['A. 4.5 × 10⁻⁴', 'B. 4.5 × 10⁴', 'C. 4.5 × 10⁻³', 'D. 4.5 × 10³'],
-        answer: 'A',
-        explanation: 'Move decimal left 4 places: 4.5 × 10⁻⁴.',
-      },
-      {
-        id: 'math-4',
-        section: 'math',
-        title: 'Fraction Exponents',
-        skill: 'Rational exponents',
-        prompt: 'Simplify: 8^(2/3)',
-        choices: ['A. 4', 'B. 16', 'C. 2', 'D. 8'],
-        answer: 'A',
-        explanation: '8^(2/3) = (8^(1/3))² = 2² = 4.',
-      },
-      {
-        id: 'math-5',
-        section: 'math',
-        title: 'Negative Exponents',
-        skill: 'Exponent rules',
-        prompt: 'Simplify: 3⁻²',
-        choices: ['A. -9', 'B. 1/9', 'C. -1/9', 'D. 9'],
-        answer: 'B',
-        explanation: '3⁻² = 1/(3²) = 1/9.',
-      },
-      {
-        id: 'math-6',
-        section: 'math',
-        title: 'Radical Operations',
-        skill: 'Combining radicals',
-        prompt: 'Simplify: 2√3 + 3√3',
-        choices: ['A. 5√3', 'B. √6', 'C. 6√3', 'D. 5√6'],
-        answer: 'A',
-        explanation: 'Add coefficients: 2 + 3 = 5, same radical.',
-      },
-      {
-        id: 'math-7',
-        section: 'math',
-        title: 'Scientific Notation Multiplication',
-        skill: 'Operations with scientific notation',
-        prompt: '(3.2 × 10³) × (1.5 × 10²) = ?',
-        choices: ['A. 4.8 × 10⁵', 'B. 4.8 × 10⁶', 'C. 4.8 × 10⁴', 'D. 4.8 × 10³'],
-        answer: 'A',
-        explanation: 'Multiply coefficients: 3.2 × 1.5 = 4.8. Add exponents: 3 + 2 = 5.',
-      },
-      {
-        id: 'math-8',
-        section: 'math',
-        title: 'Exponent Distribution',
-        skill: 'Power rules',
-        prompt: '(x²y)³ = ?',
-        choices: ['A. x⁵y³', 'B. x⁶y³', 'C. x³y³', 'D. x⁶y'],
-        answer: 'B',
-        explanation: 'Apply power to each factor: x^(2×3) × y^(1×3) = x⁶y³.',
-      },
-      {
-        id: 'math-9',
-        section: 'math',
-        title: 'Rationalizing Denominators',
-        skill: 'Radical operations',
-        prompt: 'Rationalize: 1/(√2 + √3)',
-        choices: ['A. √2 - √3', 'B. √6 - 1', 'C. 2√3 - 2√2', 'D. √3 - √2'],
-        answer: 'D',
-        explanation: 'Multiply numerator and denominator by conjugate: √2 - √3.',
-      },
-      {
-        id: 'math-10',
-        section: 'math',
-        title: 'Zero and Negative Exponents',
-        skill: 'Special exponent cases',
-        prompt: 'What is 5⁰?',
-        choices: ['A. 0', 'B. 1', 'C. 5', 'D. Undefined'],
-        answer: 'B',
-        explanation: 'Any nonzero number to the power of 0 equals 1.',
-      },
-    ],
-    science: [
-      {
-        id: 'science-1',
-        section: 'science',
-        title: 'Data Interpretation',
-        skill: 'Graph reading',
-        prompt: 'A graph shows plant height increasing from 5cm to 15cm over 4 weeks with more sunlight. What does this show?',
-        choices: ['A. Sunlight decreases growth', 'B. More sunlight correlates with faster growth', 'C. Water is the only growth factor', 'D. All plants start at same height'],
-        answer: 'B',
-        explanation: 'The graph directly shows faster growth with more sunlight in this experiment.',
-      },
-      {
-        id: 'science-2',
-        section: 'science',
-        title: 'Experimental Design',
-        skill: 'Controls and variables',
-        prompt: 'In an experiment testing fertilizer, one group gets fertilizer, one does not. Why is the no-fertilizer group important?',
-        choices: ['A. It measures sunlight', 'B. It provides comparison for fertilizer effect', 'C. It guarantees growth', 'D. It tests water amount'],
-        answer: 'B',
-        explanation: 'The control group allows comparison to isolate the fertilizer effect.',
-      },
-      {
-        id: 'science-3',
-        section: 'science',
-        title: 'Data Trends',
-        skill: 'Trend analysis',
-        prompt: 'A table shows enzyme activity increasing as temperature rises from 20°C to 40°C, then decreasing. What is the optimal temperature?',
-        choices: ['A. 20°C', 'B. 30°C', 'C. 40°C', 'D. 50°C'],
-        answer: 'C',
-        explanation: 'Activity peaks at 40°C before decreasing, indicating optimal temperature.',
-      },
-      {
-        id: 'science-4',
-        section: 'science',
-        title: 'Scientific Reasoning',
-        skill: 'Evidence evaluation',
-        prompt: 'A study shows vitamin C reduces cold duration by 20%. Which conclusion is best supported?',
-        choices: ['A. Vitamin C prevents all colds', 'B. Vitamin C reduces cold duration', 'C. Vitamin C cures infections', 'D. No treatment works'],
-        answer: 'B',
-        explanation: 'The data supports reduction in duration, not prevention or cure.',
-      },
-      {
-        id: 'science-5',
-        section: 'science',
-        title: 'Graph Analysis',
-        skill: 'Data patterns',
-        prompt: 'A line graph shows population growth slowing as resources become limited. This illustrates:',
-        choices: ['A. Exponential growth', 'B. Carrying capacity', 'C. Linear growth', 'D. Unlimited resources'],
-        answer: 'B',
-        explanation: 'Growth slowing due to limited resources shows carrying capacity effect.',
-      },
-      {
-        id: 'science-6',
-        section: 'science',
-        title: 'Experimental Controls',
-        skill: 'Variable identification',
-        prompt: 'In testing plant growth, temperature is kept constant. Temperature is a:',
-        choices: ['A. Independent variable', 'B. Dependent variable', 'C. Control', 'D. Hypothesis'],
-        answer: 'C',
-        explanation: 'Constant factors are controls to isolate the tested variable.',
-      },
-      {
-        id: 'science-7',
-        section: 'science',
-        title: 'Data Interpretation',
-        skill: 'Table analysis',
-        prompt: 'A table shows metal conductivity decreasing with increasing temperature. Which metal conducts best at low temperature?',
-        choices: ['A. The one with highest conductivity at 100°C', 'B. The one with lowest conductivity at 0°C', 'C. The one with highest conductivity at 0°C', 'D. The one with most consistent conductivity'],
-        answer: 'C',
-        explanation: 'Highest conductivity at lowest temperature conducts best in cold.',
-      },
-      {
-        id: 'science-8',
-        section: 'science',
-        title: 'Scientific Method',
-        skill: 'Hypothesis testing',
-        prompt: 'A hypothesis predicts heavier objects fall faster. Testing shows they fall at same rate. What should you conclude?',
-        choices: ['A. Hypothesis is proven true', 'B. Hypothesis is disproven', 'C. Air resistance caused results', 'D. Test was invalid'],
-        answer: 'B',
-        explanation: 'Data contradicts hypothesis, so it is disproven.',
-      },
-      {
-        id: 'science-9',
-        section: 'science',
-        title: 'Evidence Evaluation',
-        skill: 'Conclusion support',
-        prompt: 'A study finds correlation between exercise and heart health. This proves:',
-        choices: ['A. Exercise causes better heart health', 'B. Exercise and health are related', 'C. No other factors affect heart health', 'D. Exercise prevents all heart problems'],
-        answer: 'B',
-        explanation: 'Correlation shows relationship, not causation or exclusivity.',
-      },
-      {
-        id: 'science-10',
-        section: 'science',
-        title: 'Experimental Design',
-        skill: 'Sample size',
-        prompt: 'Why use large sample sizes in experiments?',
-        choices: ['A. To increase cost', 'B. To reduce random variation effects', 'C. To make results less accurate', 'D. To test fewer subjects'],
-        answer: 'B',
-        explanation: 'Large samples reduce impact of random variation for more reliable results.',
-      },
-    ],
-    english: [
-      {
-        id: 'english-1',
-        section: 'english',
-        title: 'Subject-Verb Agreement',
-        skill: 'Grammar',
-        prompt: 'The team of players _____ ready for the game.',
-        choices: ['A. is', 'B. are', 'C. was', 'D. be'],
-        answer: 'A',
-        explanation: '"Team" is singular, so needs singular verb "is".',
-      },
-      {
-        id: 'english-2',
-        section: 'english',
-        title: 'Pronoun Reference',
-        skill: 'Clarity',
-        prompt: 'Maria and Juan went to the store, but _____ forgot the list.',
-        choices: ['A. they', 'B. he', 'C. she', 'D. it'],
-        answer: 'A',
-        explanation: '"They" clearly refers to both Maria and Juan.',
-      },
-      {
-        id: 'english-3',
-        section: 'english',
-        title: 'Transition Words',
-        skill: 'Logical flow',
-        prompt: 'The experiment failed; _____, we learned valuable lessons.',
-        choices: ['A. however', 'B. therefore', 'C. meanwhile', 'D. although'],
-        answer: 'A',
-        explanation: '"However" shows contrast between failure and learning.',
-      },
-      {
-        id: 'english-4',
-        section: 'english',
-        title: 'Parallel Structure',
-        skill: 'Consistency',
-        prompt: 'The coach emphasized running, jumping, and _____ swimming.',
-        choices: ['A. to swim', 'B. swimming', 'C. swim', 'D. swam'],
-        answer: 'B',
-        explanation: 'Parallel structure requires "swimming" to match "running, jumping".',
-      },
-      {
-        id: 'english-5',
-        section: 'english',
-        title: 'Word Choice',
-        skill: 'Precision',
-        prompt: 'The scientist was _____ in her research methodology.',
-        choices: ['A. meticulous', 'B. careless', 'C. quick', 'D. loud'],
-        answer: 'A',
-        explanation: '"Meticulous" means careful and precise, fitting for research.',
-      },
-      {
-        id: 'english-6',
-        section: 'english',
-        title: 'Sentence Structure',
-        skill: 'Clarity',
-        prompt: 'Having finished the project, the team celebrated.',
-        choices: ['A. Fragment', 'B. Run-on', 'C. Complete sentence', 'D. Comma splice'],
-        answer: 'C',
-        explanation: 'This is a complete sentence with subject "team" and verb "celebrated".',
-      },
-      {
-        id: 'english-7',
-        section: 'english',
-        title: 'Punctuation',
-        skill: 'Comma usage',
-        prompt: 'The book, which was published in 1995, is now a classic.',
-        choices: ['A. Correct', 'B. Needs comma after "book"', 'C. Remove commas', 'D. Add comma after "1995"'],
-        answer: 'A',
-        explanation: 'Commas correctly set off the non-restrictive clause.',
-      },
-      {
-        id: 'english-8',
-        section: 'english',
-        title: 'Modifier Placement',
-        skill: 'Clarity',
-        prompt: 'The student solved the problem _____ on the board.',
-        choices: ['A. quickly', 'B. with a pencil', 'C. in the classroom', 'D. yesterday'],
-        answer: 'A',
-        explanation: '"Quickly" correctly modifies "solved".',
-      },
-      {
-        id: 'english-9',
-        section: 'english',
-        title: 'Idiom Usage',
-        skill: 'Appropriate expression',
-        prompt: 'The manager decided to _____ the new policy.',
-        choices: ['A. implement', 'B. invent', 'C. destroy', 'D. ignore'],
-        answer: 'A',
-        explanation: '"Implement" is the correct idiom for putting a policy into action.',
-      },
-      {
-        id: 'english-10',
-        section: 'english',
-        title: 'Conciseness',
-        skill: 'Word economy',
-        prompt: 'Due to the fact that it was raining, the game was cancelled.',
-        choices: ['A. Keep as is', 'B. "Because it was raining, the game was cancelled"', 'C. Add more details', 'D. Make it longer'],
-        answer: 'B',
-        explanation: '"Because" is more concise than "due to the fact that".',
-      },
-    ],
-    reading: [
-      {
-        id: 'reading-1',
-        section: 'reading',
-        title: 'Main Idea',
-        skill: 'Central theme',
-        prompt: 'A passage discusses how community gardens provide food, social connections, and environmental benefits. What is the main idea?',
-        choices: ['A. Gardens are expensive', 'B. Community gardens benefit neighborhoods in multiple ways', 'C. Vegetables are unhealthy', 'D. People hate gardening'],
-        answer: 'B',
-        explanation: 'The passage lists multiple benefits, forming the central theme.',
-      },
-      {
-        id: 'reading-2',
-        section: 'reading',
-        title: 'Author\'s Purpose',
-        skill: 'Intent identification',
-        prompt: 'An article argues that mirror tests are flawed for measuring animal self-awareness. Why did the author write this?',
-        choices: ['A. To prove animals are not self-aware', 'B. To suggest better methods for measuring awareness', 'C. To criticize scientists', 'D. To promote animal rights'],
-        answer: 'B',
-        explanation: 'The author critiques current methods and implies better approaches are needed.',
-      },
-      {
-        id: 'reading-3',
-        section: 'reading',
-        title: 'Evidence Support',
-        skill: 'Text support',
-        prompt: 'A passage states that early humans used tools. Which evidence would best support this?',
-        choices: ['A. Modern humans use computers', 'B. Ancient stone tools found at sites', 'C. Animals use tools too', 'D. Tools are expensive today'],
-        answer: 'B',
-        explanation: 'Physical evidence of ancient tools directly supports the claim.',
-      },
-      {
-        id: 'reading-4',
-        section: 'reading',
-        title: 'Tone Analysis',
-        skill: 'Attitude identification',
-        prompt: 'An author describes climate change as "a crisis demanding immediate action." The tone is:',
-        choices: ['A. Neutral', 'B. Humorous', 'C. Urgent and serious', 'D. Dismissive'],
-        answer: 'C',
-        explanation: '"Crisis" and "demanding immediate action" convey urgency.',
-      },
-      {
-        id: 'reading-5',
-        section: 'reading',
-        title: 'Inference',
-        skill: 'Reading between lines',
-        prompt: 'A passage mentions that a scientist "reluctantly accepted" a new theory. This suggests the scientist:',
-        choices: ['A. Was excited about the theory', 'B. Initially doubted the theory', 'C. Invented the theory', 'D. Was indifferent'],
-        answer: 'B',
-        explanation: '"Reluctantly" implies initial resistance or doubt.',
-      },
-      {
-        id: 'reading-6',
-        section: 'reading',
-        title: 'Vocabulary in Context',
-        skill: 'Word meaning',
-        prompt: 'In "The policy was implemented despite vocal opposition," "vocal" most likely means:',
-        choices: ['A. Silent', 'B. Musical', 'C. Outspoken', 'D. Written'],
-        answer: 'C',
-        explanation: 'In context of opposition, "vocal" means expressed verbally/outspoken.',
-      },
-      {
-        id: 'reading-7',
-        section: 'reading',
-        title: 'Structure Analysis',
-        skill: 'Organization',
-        prompt: 'A passage first describes a problem, then proposes solutions. This is organized by:',
-        choices: ['A. Chronological order', 'B. Problem-solution', 'C. Compare-contrast', 'D. Cause-effect'],
-        answer: 'B',
-        explanation: 'Problem description followed by solutions shows problem-solution structure.',
-      },
-      {
-        id: 'reading-8',
-        section: 'reading',
-        title: 'Author\'s Perspective',
-        skill: 'Point of view',
-        prompt: 'An economist argues that raising minimum wage helps workers but hurts businesses. The author is:',
-        choices: ['A. Completely biased toward workers', 'B. Presenting a balanced view', 'C. Ignoring business concerns', 'D. Supporting only businesses'],
-        answer: 'B',
-        explanation: 'The author acknowledges both positive and negative effects.',
-      },
-      {
-        id: 'reading-9',
-        section: 'reading',
-        title: 'Detail Location',
-        skill: 'Text navigation',
-        prompt: 'To find specific experimental results in a science passage, look in the:',
-        choices: ['A. Introduction', 'B. Methods section', 'C. Results section', 'D. Conclusion'],
-        answer: 'C',
-        explanation: 'Results section contains the specific experimental findings.',
-      },
-      {
-        id: 'reading-10',
-        section: 'reading',
-        title: 'Contradiction Identification',
-        skill: 'Logical consistency',
-        prompt: 'A passage claims "all mammals are warm-blooded" but later mentions "some exceptions exist." This is:',
-        choices: ['A. Perfectly consistent', 'B. A major contradiction', 'C. A minor clarification', 'D. Irrelevant information'],
-        answer: 'C',
-        explanation: 'The exception qualifies the general statement, making it more accurate.',
-      },
-    ],
-  };
+  const section = sectionParam as ActSection;
+  const apiKey = process.env.GEMINI_API_KEY ?? process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
-  const questions = sampleQuestions[section].slice(0, count);
-  return Response.json({ questions });
+  if (!apiKey) {
+    return Response.json({ questions: fallback(section, count), source: 'fallback' });
+  }
+
+  try {
+    const knowledgeBase = await readFile(KNOWLEDGE_PATH, 'utf8');
+    const prompt = [
+      'You are generating ACT-style practice questions for a premium prep platform.',
+      `Return exactly ${count} ${section} questions.`,
+      'Each question must have four answer choices and only one correct answer.',
+      'Keep the difficulty realistic for ACT students and vary the skills.',
+      'Avoid duplicate prompts and avoid markdown code fences.',
+      'Use the knowledge base as context for tone, skills, and section framing.',
+      'Return strict JSON matching this shape:',
+      '{"questions":[{"title":"","prompt":"","choices":["","","",""],"answer":"A","explanation":"","skill":""}]}',
+      '',
+      `Section: ${section}`,
+      '',
+      'Knowledge base:',
+      knowledgeBase,
+    ].join('\n');
+
+    const geminiResponse = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: prompt }],
+          },
+        ],
+        generationConfig: {
+          temperature: 0.85,
+          topP: 0.95,
+          maxOutputTokens: 2400,
+          responseMimeType: 'application/json',
+          thinkingConfig: {
+            thinkingBudget: 0,
+          },
+        },
+      }),
+    });
+
+    if (!geminiResponse.ok) {
+      return Response.json({ questions: fallback(section, count), source: 'fallback' });
+    }
+
+    const data = (await geminiResponse.json()) as {
+      candidates?: Array<{
+        content?: {
+          parts?: Array<{ text?: string }>;
+        };
+      }>;
+    };
+
+    const rawText =
+      data.candidates?.[0]?.content?.parts
+        ?.map((part) => part.text ?? '')
+        .join('')
+        .trim() ?? '';
+
+    if (!rawText) {
+      return Response.json({ questions: fallback(section, count), source: 'fallback' });
+    }
+
+    const parsed = JSON.parse(rawText) as { questions?: Array<Partial<PracticeQuestion>> };
+    const generated = Array.isArray(parsed.questions)
+      ? parsed.questions.slice(0, count).map((question, index) => normalizeQuestion(section, index, question))
+      : [];
+
+    if (generated.length !== count) {
+      return Response.json({ questions: fallback(section, count), source: 'fallback' });
+    }
+
+    return Response.json({ questions: generated, source: 'ai' });
+  } catch {
+    return Response.json({ questions: fallback(section, count), source: 'fallback' });
+  }
 }
