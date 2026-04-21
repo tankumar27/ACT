@@ -73,9 +73,10 @@ export default function PracticeClient() {
 
   const currentQuestion = questions[currentQuestionIndex];
   const answeredCount = Object.keys(selectedAnswers).length;
+  const progressPercent = questions.length > 0 ? Math.round((answeredCount / questions.length) * 100) : 0;
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8">
       <section className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="panel rounded-[2rem] p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
@@ -117,17 +118,23 @@ export default function PracticeClient() {
 
         <div className="panel rounded-[2rem] p-6">
           <PracticeSphere />
-          <div className="mt-4 grid gap-3">
+          <div className="mt-4 space-y-4">
             <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
-              <p className="text-xs uppercase tracking-[0.28em] text-zinc-500">Flow</p>
-              <p className="mt-2 text-sm leading-6 text-zinc-200">
-                Navigate questions using arrows or click directly on question numbers.
-              </p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs uppercase tracking-[0.28em] text-zinc-500">Progress</p>
+                <p className="text-xs font-semibold text-zinc-300">{answeredCount} / {questions.length}</p>
+              </div>
+              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-zinc-400 to-zinc-200 rounded-full transition-all duration-500"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
             </div>
             <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4">
-              <p className="text-xs uppercase tracking-[0.28em] text-zinc-500">Progress</p>
+              <p className="text-xs uppercase tracking-[0.28em] text-zinc-500">Current Section</p>
               <p className="mt-2 text-sm leading-6 text-zinc-200">
-                {answeredCount} of {questions.length} questions answered.
+                {currentQuestion ? sectionMeta[currentQuestion.section].name : 'Select questions to begin'}
               </p>
             </div>
           </div>
@@ -135,83 +142,93 @@ export default function PracticeClient() {
       </section>
 
       {loading ? (
-        <div className="py-10 text-center">
-          <p className="text-white">Generating your question set...</p>
+        <div className="py-16 text-center">
+          <div className="inline-block animate-pulse">
+            <p className="text-white text-lg">Generating your question set...</p>
+          </div>
         </div>
       ) : questions.length > 0 ? (
         <div className="space-y-6">
-          <div className="panel sticky top-20 z-40 rounded-[2rem] p-4">
-            <div className="flex items-center justify-between gap-4">
-              <button
-                type="button"
-                onClick={() => goToQuestion(currentQuestionIndex - 1)}
-                disabled={currentQuestionIndex === 0}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-
-              <div className="flex flex-wrap justify-center gap-2 max-w-[70%] overflow-x-auto px-2">
-                {questions.map((q, idx) => {
-                  const isAnswered = selectedAnswers[q.id] !== undefined;
-                  const isCurrent = idx === currentQuestionIndex;
-
-                  return (
-                    <button
-                      key={q.id}
-                      type="button"
-                      onClick={() => goToQuestion(idx)}
-                      className={`flex h-9 min-w-[2.25rem] items-center justify-center rounded-full border px-2 text-xs font-semibold uppercase tracking-[0.1em] transition-all ${
-                        isCurrent
-                          ? 'border-white/30 bg-white text-black'
-                          : isAnswered
-                            ? 'border-white/15 bg-white/10 text-zinc-200 hover:bg-white/15'
-                            : 'border-white/10 bg-white/5 text-zinc-400 hover:border-white/15 hover:bg-white/10'
-                      }`}
-                    >
-                      {idx + 1}
-                    </button>
-                  );
-                })}
+          <div className="panel rounded-[2rem] p-4">
+            <div className="flex items-center justify-between gap-4 mb-4">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-semibold text-zinc-300">
+                  Question {currentQuestionIndex + 1} of {questions.length}
+                </span>
+                <span className="text-xs text-zinc-500">
+                  ({progressPercent}% complete)
+                </span>
               </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => goToQuestion(currentQuestionIndex - 1)}
+                  disabled={currentQuestionIndex === 0}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goToQuestion(currentQuestionIndex + 1)}
+                  disabled={currentQuestionIndex === questions.length - 1}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
+                >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <div className="flex flex-wrap gap-2">
+              {questions.map((q, idx) => {
+                const isAnswered = selectedAnswers[q.id] !== undefined;
+                const isCurrent = idx === currentQuestionIndex;
 
-              <button
-                type="button"
-                onClick={() => goToQuestion(currentQuestionIndex + 1)}
-                disabled={currentQuestionIndex === questions.length - 1}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+                return (
+                  <button
+                    key={q.id}
+                    type="button"
+                    onClick={() => goToQuestion(idx)}
+                    className={`flex h-10 min-w-[2.5rem] items-center justify-center rounded-lg border text-sm font-semibold transition-all ${
+                      isCurrent
+                        ? 'border-white/40 bg-white text-black'
+                        : isAnswered
+                          ? 'border-emerald-400/30 bg-emerald-400/10 text-emerald-300 hover:bg-emerald-400/20'
+                          : 'border-white/10 bg-white/5 text-zinc-400 hover:border-white/20 hover:bg-white/10'
+                    }`}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           {currentQuestion && (
-            <article className="panel rounded-[2rem] p-6">
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-zinc-400">
+            <article className="panel rounded-[2rem] p-8">
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-zinc-300">
                     {sectionMeta[currentQuestion.section].name}
-                  </p>
-                  <h2 className="mt-2 text-2xl font-semibold text-white">
-                    {currentQuestion.title}
-                  </h2>
-                  <p className="mt-2 text-sm text-zinc-400">
-                    Skill focus: {currentQuestion.skill}
-                  </p>
+                  </span>
+                  <span className="text-xs text-zinc-500">
+                    {currentQuestion.skill}
+                  </span>
                 </div>
-                <span className="rounded-full border border-white/10 bg-black/50 px-3 py-1 text-xs uppercase tracking-[0.24em] text-zinc-300">
-                  {currentQuestionIndex + 1} / {questions.length}
-                </span>
+                <h2 className="text-xl font-semibold text-white leading-relaxed">
+                  {currentQuestion.title}
+                </h2>
               </div>
 
-              <p className="text-base leading-8 text-zinc-100">{currentQuestion.prompt}</p>
+              <div className="mb-8 text-base leading-7 text-zinc-200 whitespace-pre-wrap">
+                {currentQuestion.prompt}
+              </div>
 
-              <div className="mt-6 grid gap-3">
+              <div className="space-y-3">
                 {currentQuestion.choices.map((choice) => {
                   const label = choice.split('.')[0];
                   const isPicked = selectedAnswers[currentQuestion.id] === label;
@@ -219,12 +236,12 @@ export default function PracticeClient() {
                   const answered = selectedAnswers[currentQuestion.id] !== undefined;
 
                   let choiceClass =
-                    'border border-white/10 bg-white/5 text-zinc-100 hover:bg-white/10';
+                    'border border-white/10 bg-white/[0.02] text-zinc-200 hover:bg-white/10 hover:border-white/20';
 
                   if (answered && isCorrect) {
-                    choiceClass = 'border border-emerald-300/40 bg-emerald-300/12 text-emerald-50';
+                    choiceClass = 'border border-emerald-400/50 bg-emerald-400/10 text-emerald-200';
                   } else if (answered && isPicked && !isCorrect) {
-                    choiceClass = 'border border-rose-300/40 bg-rose-300/12 text-rose-50';
+                    choiceClass = 'border border-rose-400/50 bg-rose-400/10 text-rose-200';
                   }
 
                   return (
@@ -232,7 +249,8 @@ export default function PracticeClient() {
                       key={choice}
                       type="button"
                       onClick={() => answerQuestion(currentQuestion.id, label)}
-                      className={`rounded-2xl px-4 py-3 text-left text-sm leading-7 transition-all ${choiceClass}`}
+                      disabled={answered}
+                      className={`w-full rounded-xl px-5 py-4 text-left text-sm leading-relaxed transition-all ${choiceClass} ${answered ? 'cursor-default' : 'cursor-pointer'}`}
                     >
                       {choice}
                     </button>
@@ -241,34 +259,56 @@ export default function PracticeClient() {
               </div>
 
               {selectedAnswers[currentQuestion.id] !== undefined ? (
-                <div className="mt-6 rounded-3xl border border-white/10 bg-black/70 p-5">
-                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-zinc-400">
-                    {selectedAnswers[currentQuestion.id] === currentQuestion.answer
-                      ? 'Nice work'
-                      : 'Review this miss'}
-                  </p>
-                  <p className="mt-3 text-sm leading-7 text-zinc-200">
-                    Correct answer: {currentQuestion.answer}. {currentQuestion.explanation}
+                <div className="mt-8 rounded-2xl border border-white/10 bg-black/60 p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    {selectedAnswers[currentQuestion.id] === currentQuestion.answer ? (
+                      <>
+                        <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-300">
+                          Correct
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-rose-300">
+                          Incorrect
+                        </p>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-sm leading-7 text-zinc-300">
+                    <span className="text-zinc-400">Correct answer: </span>
+                    <span className="font-semibold text-white">{currentQuestion.answer}</span>
+                    {' - '}
+                    {currentQuestion.explanation}
                   </p>
                   {selectedAnswers[currentQuestion.id] !== currentQuestion.answer ? (
                     <Link
                       href={`/review/${currentQuestion.id}?answer=${selectedAnswers[currentQuestion.id]}`}
-                      className="mt-4 inline-flex rounded-full bg-white px-4 py-2 text-sm font-semibold text-black transition-all hover:bg-zinc-200"
+                      className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-black transition-all hover:bg-zinc-200"
                     >
-                      Clarify further with AI
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                      </svg>
+                      Ask AI for explanation
                     </Link>
                   ) : null}
                 </div>
               ) : null}
 
-              <div className="mt-6 flex justify-between gap-4">
+              <div className="mt-8 flex items-center justify-between gap-4 pt-4 border-t border-white/5">
                 <button
                   type="button"
                   onClick={() => goToQuestion(currentQuestionIndex - 1)}
                   disabled={currentQuestionIndex === 0}
-                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300 transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                   Previous
@@ -278,10 +318,10 @@ export default function PracticeClient() {
                   type="button"
                   onClick={() => goToQuestion(currentQuestionIndex + 1)}
                   disabled={currentQuestionIndex === questions.length - 1}
-                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-zinc-300 transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-all hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   Next
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
